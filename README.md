@@ -1,12 +1,13 @@
-Qt5 Example project
+Qt Example project
 ===================
 
-Tested for macOS 11.5.2, iOS and Android.
+Tested for macOS 12.3 on MacBook Air M1.
 
-    cd cmake-build-release
-    conan install .. -pr:b default -pr:h <profile>
-    conan build .. -bf . -sf ..
+    mkdir build
+    cd build
+    conan install .. -pr:b <build-profile> -pr:h <host-profile>
+    conan build ..
 
 For Android an additional step is required:
 
-    cmake --build . --target aab
+    cmake --build .. --target aab

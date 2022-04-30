@@ -3,8 +3,8 @@ from conans import ConanFile, CMake, tools, __version__ as conan_version
 assert conan_version >= tools.Version('1.35'), 'Conan version is too old.'
 
 
-class Qt5ExampleConan(ConanFile):
-    name = 'qt5example'
+class QtAppConan(ConanFile):
+    name = 'qt-app'
     version = '0.0.0'
     generators = 'cmake'
 
@@ -17,7 +17,7 @@ class Qt5ExampleConan(ConanFile):
         'qml.qrc'
     )
 
-    requires = 'qt/5.15.2@nap/devel'
+    requires = 'qt/6.3.0@nap/devel'
 
     options = {
         'ci_build': [False, True],
@@ -37,20 +37,10 @@ class Qt5ExampleConan(ConanFile):
     def cmake(self):
         generator = 'Xcode' if self.settings.os == 'iOS' else 'Ninja'
         cmake = CMake(self, generator=generator)
-        # cmake.definitions['CMAKE_FIND_DEBUG_MODE'] = True
-        cmake.definitions['CMAKE_FIND_ROOT_PATH_MODE_PACKAGE'] = 'BOTH'
-        cmake.definitions['CMAKE_FIND_ROOT_PATH_MODE_INCLUDE'] = 'BOTH'
-        cmake.definitions['CMAKE_FIND_ROOT_PATH_MODE_LIBRARY'] = 'BOTH'
+        #cmake.definitions['QT_HOST_PATH'] = 'TODO'
         cmake.definitions['CONAN_DISABLE_CHECK_COMPILER'] = True
 
         cmake.definitions['CMAKE_SYSTEM_NAME'] = self.cmake_system_name
-
-        if self.settings.os == 'Android':
-            cmake.definitions['ANDROID'] = True
-            cmake.definitions['ANDROID_SDK'] = '/Users/user/Library/Android/sdk'
-            cmake.definitions['ANDROID_ABI'] = 'arm64-v8a'
-        elif self.settings.os == 'iOS':
-            cmake.definitions['iOS'] = True
 
         if self.options.ci_build:
             cmake.definitions['IS_CI_BUILD'] = True

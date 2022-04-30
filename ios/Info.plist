@@ -9,13 +9,13 @@
         <key>CFBundleSignature</key>
         <string>????</string>
         <key>CFBundleExecutable</key>
-        <string>qt5example</string>
+        <string>qt-app</string>
         <key>CFBundleIdentifier</key>
-        <string>app.qt5example</string>
+        <string>app.qt-app</string>
         <key>CFBundleDisplayName</key>
-        <string>qt5example</string>
+        <string>qt-app</string>
         <key>CFBundleName</key>
-        <string>qt5example</string>
+        <string>qt-app</string>
         <key>CFBundleShortVersionString</key>
         <string>0.0.0</string>
         <key>CFBundleVersion</key>

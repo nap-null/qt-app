@@ -6,16 +6,11 @@ set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTORCC ON)
 set(CMAKE_AUTOUIC ON)
 
-if(IOS)
-    add_definitions(-DIOS)
-endif()
-
 if(ANDROID)
     set(ANDROID_PACKAGE_SOURCE_DIR "${CMAKE_SOURCE_DIR}/android")
 endif()
 
-
-project(qt5example LANGUAGES CXX)
+project(qt-app LANGUAGES CXX)
 
 include(${CMAKE_BINARY_DIR}/conanbuildinfo.cmake)
 
@@ -28,15 +23,13 @@ endif()
 conan_basic_setup(${basic_setup_args})
 
 find_package(
-    Qt5
+    Qt6
         COMPONENTS
             Core
-            Widgets
+            Gui
             Qml
             Quick
             QuickControls2
-            QuickTemplates2
-            QmlWorkerScript
         REQUIRED
 )
 
@@ -49,59 +42,25 @@ if(ANDROID)
             LIBRARY_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/android-build/libs/${ANDROID_ABI}"
     )
 else()
-    add_executable(${PROJECT_NAME})
-
-    add_definitions(-DBUILD_STATIC)
+    qt_add_executable(${PROJECT_NAME} main.cpp)
 endif()
 
-set(SOURCES qml/main.qml)
-
-qt5_add_resources(SOURCES qml.qrc)
-
-target_sources(${PROJECT_NAME} PUBLIC main.cpp ${SOURCES})
+qt_add_qml_module(
+    ${PROJECT_NAME}
+        URI qt_app
+        VERSION 1.0
+        QML_FILES
+            qml/main.qml
+)
 
 target_link_libraries(
     ${PROJECT_NAME}
-        Qt5::Widgets
-        Qt5::Qml
-        Qt5::QmlModels
-        Qt5::QmlWorkerScript
-        Qt5::QuickTemplates2
-        Qt5::QuickControls2
-        Qt5::Quick
-        Qt5::Gui
-        Qt5::Core
-        Qt5::Network
-)
-
-if(NOT ANDROID)
-    target_link_libraries(
-        ${PROJECT_NAME}
-            qtquick2plugin
-            qmlplugin
-            qtquickcontrols2plugin
-            modelsplugin
-            workerscriptplugin
-            labsmodelsplugin
-            qquicklayoutsplugin
-            windowplugin
-            qtquicktemplates2plugin
-    )
-endif()
-
-target_link_directories(
-    ${PROJECT_NAME}
-        PRIVATE
-            ${CONAN_QT_ROOT}/plugins/platforms
-            ${CONAN_QT_ROOT}/qml/QtQml
-            ${CONAN_QT_ROOT}/qml/QtQuick.2
-            ${CONAN_QT_ROOT}/qml/QtQml/Models.2
-            ${CONAN_QT_ROOT}/qml/QtQml/WorkerScript.2
-            ${CONAN_QT_ROOT}/qml/QtQuick/Controls.2
-            ${CONAN_QT_ROOT}/qml/QtQuick/Window.2
-            ${CONAN_QT_ROOT}/qml/QtQuick/Layouts
-            ${CONAN_QT_ROOT}/qml/QtQuick/Templates.2
-            ${CONAN_QT_ROOT}/qml/Qt/labs/qmlmodels
+        PUBLIC
+            Qt6::Core
+            Qt6::Gui
+            Qt6::Qml
+            Qt6::Quick
+            Qt6::QuickControls2
 )
 
 if(IOS)
