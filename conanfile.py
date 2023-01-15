@@ -17,7 +17,7 @@ class QtAppConan(ConanFile):
         'qml.qrc'
     )
 
-    requires = 'qt/6.3.0@nap/devel'
+    requires = 'qt/6.4.0@nap/devel'
 
     options = {
         'ci_build': [False, True],
