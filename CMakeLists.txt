@@ -43,10 +43,6 @@ if(ANDROID)
     )
 else()
     qt_add_executable(${PROJECT_NAME} main.cpp)
-
-    if(WIN32)
-        target_link_options(${PROJECT_NAME} PRIVATE "/SUBSYSTEM:WINDOWS" "/ENTRY:mainCRTStartup")
-    endif()
 endif()
 
 qt_add_qml_module(
