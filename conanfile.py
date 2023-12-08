@@ -21,10 +21,12 @@ class QtAppConan(ConanFile):
 
     options = {
         'ci_build': [False, True],
+        'shared': [False, True],
     }
 
     default_options = {
-        'ci_build': False
+        'ci_build': False,
+        'shared': True,
     }
 
     def build(self):
