@@ -5,21 +5,21 @@ else()
 endif()
 
 qt_add_qml_module(
-        ${PROJECT_NAME}
+    ${PROJECT_NAME}
         URI qt_app
         VERSION 1.0
         QML_FILES
-        qml/main.qml
+            qml/main.qml
 )
 
 target_link_libraries(
-        ${PROJECT_NAME}
+    ${PROJECT_NAME}
         PUBLIC
-        Qt6::Core
-        Qt6::Gui
-        Qt6::Qml
-        Qt6::Quick
-        Qt6::QuickControls2
+            Qt6::Core
+            Qt6::Gui
+            Qt6::Qml
+            Qt6::Quick
+            Qt6::QuickControls2
 )
 
 include(cmake/ios.cmake)
